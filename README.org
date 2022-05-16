@@ -1,0 +1,32 @@
+* elisp-flymake-form
+
+Simple flymake backend to check all top level forms are lists.
+
+** Installation
+
+*** Manually
+
+Download repository and it to your load path in your init file:
+
+#+begin_src elisp :eval no
+
+(add-to-list 'load-path "/path/to/elisp-flymake-form/")
+(require 'elisp-flymake-form)
+
+(add-hook 'emacs-lisp-mode-hook #'elisp-flymake-form-setup)
+#+end_src
+
+*** With use-package and straight
+
+#+begin_src elisp :eval no
+
+(use-package elisp-flymake-form
+  :straight (:repo "KarimAziev/elisp-flymake-form" :type git :host github)
+  :hook (emacs-lisp-mode . elisp-flymake-form-setup))
+
+#+end_src
+
+** Commands
+
++ ~elisp-flymake-form-setup~
+Add ~elisp-flymake-form-lint~ into ~flymake-diagnostic-functions~ and turn on flymake.
