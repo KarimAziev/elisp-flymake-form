@@ -119,6 +119,37 @@ Arguments BOUND, NOERROR, COUNT has the same meaning as `re-search-forward'."
                                         (if count
                                             (- count) -1)))
 
+(defun eslip-flymake-scan-dubs ()
+  "Check current elisp buffer for dublicate definitions and return list of links."
+  (save-excursion
+    (let ((dubs)
+          (all '()))
+      (goto-char (point-max))
+      (while (let ((pos (point))
+                   (end))
+               (setq end (ignore-errors
+                           (backward-list 1)
+                           (point)))
+               (unless (equal pos end)
+                 end))
+        (when-let* ((sexp (unless (nth 4 (syntax-ppss (point)))
+                            (list-at-point)))
+                    (id (nth 1 sexp))
+                    (type (car sexp))
+                    (line (line-number-at-pos))
+                    (cell (list id type line)))
+          (when-let ((dub (seq-find (lambda (it) (and (eq (car it) id)
+                                                 (eq (nth 1 it) type)))
+                                    all)))
+            (push `(,(nth 2 dub) 0 error
+                    ,(format "%s `%s' already defined" type id))
+                  dubs)
+            (push `(,line 0 error
+                          ,(format "%s `%s' already defined" type id))
+                  dubs))
+          (push cell all)))
+      dubs)))
+
 (defun elisp-flymake-form-lint-buffer ()
   "Check current elisp buffer for typos and return list of links."
   (save-excursion
