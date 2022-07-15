@@ -119,8 +119,8 @@ Arguments BOUND, NOERROR, COUNT has the same meaning as `re-search-forward'."
                                         (if count
                                             (- count) -1)))
 
-(defun eslip-flymake-scan-dubs ()
-  "Check current elisp buffer for dublicate definitions and return list of links."
+(defun elisp-flymake-form-scan-dubs ()
+  "Check current buffer for dublicate definitions and return list of links."
   (save-excursion
     (let ((dubs)
           (all '()))
@@ -187,7 +187,7 @@ Use `elisp-flymake-form-setup' to add this to
 
 ;;;###autoload
 (defun elisp-flymake-form-setup ()
-  "Add `elisp-flymake-form-lint' into `flymake-diagnostic-functions' and turn on flymake."
+  "Add `elisp-flymake-form-lint' into `flymake-diagnostic-functions'."
   (interactive)
   (add-hook 'flymake-diagnostic-functions #'elisp-flymake-form-lint nil t)
   (flymake-mode))
