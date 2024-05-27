@@ -1,4 +1,4 @@
-;;; elisp-flymake-form.el --- Configure flymake form -*- lexical-binding: t -*-
+;;; elisp-flymake-form.el --- Ensure that all top level forms in buffer are lists -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2022 Karim Aziiev <karim.aziiev@gmail.com>
 
