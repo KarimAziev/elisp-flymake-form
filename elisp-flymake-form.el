@@ -138,7 +138,7 @@ Arguments BOUND, NOERROR, COUNT has the same meaning as `re-search-forward'."
                     (type (car sexp))
                     (line (line-number-at-pos))
                     (cell (list id type line)))
-          (when-let ((dub (seq-find (lambda (it) (and (eq (car it) id)
+          (when-let* ((dub (seq-find (lambda (it) (and (eq (car it) id)
                                                  (eq (nth 1 it) type)))
                                     all)))
             (push `(,(nth 2 dub) 0 error
